@@ -24,12 +24,12 @@ import features from '.';
 const filters = {
 	'Pull requests': ':is(.octicon-git-pull-request, .octicon-git-pull-request-closed, .octicon-git-pull-request-draft, .octicon-git-merge)',
 	Issues: ':is(.octicon-issue-opened, .octicon-issue-closed)',
-	'CI activity': ':is(.octicon-rocket, .octicon-x)',
-	Open: ':is(.octicon-issue-opened, .octicon-git-pull-request)',
+	Deployments: ':is(.octicon-rocket, .octicon-x)',
+	Open: ':is(.octicon-issue-opened, .octicon-git-pull-request, .octicon-rocket)',
 	Closed: ':is(.octicon-issue-closed, .octicon-git-pull-request-closed)',
 	Draft: '.octicon-git-pull-request-draft',
 	Merged: '.octicon-git-merge',
-	'Workflow run failed': '.octicon-x',
+	'Run failed': '.octicon-x',
 	Read: '.notification-read',
 	Unread: '.notification-unread',
 };
@@ -88,12 +88,12 @@ function createDropdownList(category: Category, filters: Filter[]): JSX.Element 
 	const icons: {[Key in Filter]: JSX.Element} = {
 		'Pull requests': <GitPullRequestIcon className="color-text-secondary color-fg-muted"/>,
 		Issues: <IssueOpenedIcon className="color-text-secondary color-fg-muted"/>,
-		'CI activity': <RocketIcon className="color-text-ling color-fg-muted"/>,
+		Deployments: <RocketIcon className="color-text-ling color-fg-muted"/>,
 		Open: <CheckCircleIcon className="color-text-success color-fg-success"/>,
 		Closed: <XCircleIcon className="color-text-danger color-fg-danger"/>,
 		Draft: <GitPullRequestDraftIcon className="color-text-tertiary color-fg-subtle"/>,
 		Merged: <GitMergeIcon className="color-fg-done"/>,
-		'Workflow run failed': <XIcon className="color-fg-danger"/>,
+		'Run failed': <XIcon className="color-fg-danger"/>,
 		Read: <DotIcon className="color-text-link color-fg-accent"/>,
 		Unread: <DotFillIcon className="color-text-link color-fg-accent"/>,
 	};
@@ -148,8 +148,8 @@ const createDropdown = onetime(() => (
 		>
 			<div className="SelectMenu-modal">
 				<form id="rgh-select-notifications-form">
-					{createDropdownList('Type', ['Pull requests', 'Issues', 'CI activity'])}
-					{createDropdownList('Status', ['Open', 'Closed', 'Merged', 'Draft', 'Workflow run failed'])}
+					{createDropdownList('Type', ['Pull requests', 'Issues', 'Deployments'])}
+					{createDropdownList('Status', ['Open', 'Closed', 'Merged', 'Draft', 'Run failed'])}
 					{createDropdownList('Read', ['Read', 'Unread'])}
 				</form>
 			</div>
@@ -185,7 +185,7 @@ void features.add(import.meta.url, {
 		pageDetect.isNotifications,
 	],
 	exclude: [
-		pageDetect.isBlank, // Empty notification list
+		() => select.exists('img[src$="notifications/inbox-zero.svg"]'), // Notifications page may be empty
 	],
 	init,
 });
