@@ -24,12 +24,12 @@ import features from '.';
 const filters = {
 	'Pull requests': ':is(.octicon-git-pull-request, .octicon-git-pull-request-closed, .octicon-git-pull-request-draft, .octicon-git-merge)',
 	Issues: ':is(.octicon-issue-opened, .octicon-issue-closed)',
-	Deployments: ':is(.octicon-rocket, .octicon-x)',
-	Open: ':is(.octicon-issue-opened, .octicon-git-pull-request, .octicon-rocket)',
+	'CI activity': ':is(.octicon-rocket, .octicon-x)',
+	Open: ':is(.octicon-issue-opened, .octicon-git-pull-request)',
 	Closed: ':is(.octicon-issue-closed, .octicon-git-pull-request-closed)',
 	Draft: '.octicon-git-pull-request-draft',
 	Merged: '.octicon-git-merge',
-	'Run failed': '.octicon-x',
+	'Workflow run failed': '.octicon-x',
 	Read: '.notification-read',
 	Unread: '.notification-unread',
 };
@@ -88,12 +88,12 @@ function createDropdownList(category: Category, filters: Filter[]): JSX.Element 
 	const icons: {[Key in Filter]: JSX.Element} = {
 		'Pull requests': <GitPullRequestIcon className="color-text-secondary color-fg-muted"/>,
 		Issues: <IssueOpenedIcon className="color-text-secondary color-fg-muted"/>,
-		Deployments: <RocketIcon className="color-text-ling color-fg-muted"/>,
+		'CI activity': <RocketIcon className="color-text-ling color-fg-muted"/>,
 		Open: <CheckCircleIcon className="color-text-success color-fg-success"/>,
 		Closed: <XCircleIcon className="color-text-danger color-fg-danger"/>,
 		Draft: <GitPullRequestDraftIcon className="color-text-tertiary color-fg-subtle"/>,
 		Merged: <GitMergeIcon className="color-fg-done"/>,
-		'Run failed': <XIcon className="color-fg-danger"/>,
+		'Workflow run failed': <XIcon className="color-fg-danger"/>,
 		Read: <DotIcon className="color-text-link color-fg-accent"/>,
 		Unread: <DotFillIcon className="color-text-link color-fg-accent"/>,
 	};
@@ -148,8 +148,8 @@ const createDropdown = onetime(() => (
 		>
 			<div className="SelectMenu-modal">
 				<form id="rgh-select-notifications-form">
-					{createDropdownList('Type', ['Pull requests', 'Issues', 'Deployments'])}
-					{createDropdownList('Status', ['Open', 'Closed', 'Merged', 'Draft', 'Run failed'])}
+					{createDropdownList('Type', ['Pull requests', 'Issues', 'CI activity'])}
+					{createDropdownList('Status', ['Open', 'Closed', 'Merged', 'Draft', 'Workflow run failed'])}
 					{createDropdownList('Read', ['Read', 'Unread'])}
 				</form>
 			</div>
